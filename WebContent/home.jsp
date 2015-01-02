@@ -84,7 +84,7 @@ fieldset.search:hover {
     </fieldset>
 </form>
 </div>
-
+<p><a href="http://localhost:8080/GraphData/profile">个人资料</a></p>
 
 <table border="1">
 <%

@@ -88,6 +88,13 @@ public class UserHelper {
 		
 	}
 	
+	public AccountProfile getProfile(String name)
+	{
+		AccountProfile accountProfile = null;
+		
+		return accountProfile;
+	}
+	
 	public List<AccountModel> searchUser(String name)
 	{
 		Transaction tx = EmbeddedNeo4j.graphDb.beginTx();

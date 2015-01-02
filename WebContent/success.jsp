@@ -13,7 +13,7 @@
     username:<%= account.getUsername()%>
      <br>
      password:<%= account.getPassword() %>
-     <form action="fillProfile">
+     <form action="fillProfile" method="post">
      	生日:<input type="date" name="birthday"><br>
     	大学:<input type="text" name="college"><br>
     	专业:<input type="text" name="major"><br>
