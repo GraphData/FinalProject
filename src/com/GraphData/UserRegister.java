@@ -31,6 +31,15 @@ public class UserRegister extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		AccountModel account = new AccountModel();
 		String username = request.getParameter("username");
@@ -40,12 +49,11 @@ public class UserRegister extends HttpServlet {
 		{
 			account.setUsername(username);
 			account.setPassword(pwd);
-			UserHelper userHelper = new UserHelper();
-			userHelper.createNewUser(username, pwd);
+			UserHelper.createNewUser(username, pwd);
 			
 			System.out.println("success");
 			session.setAttribute("account", account);
-			String register_suc = "success.jsp";
+			String register_suc = "profile_change.jsp";
 			response.sendRedirect(register_suc);
 			return;
 		}
@@ -55,14 +63,6 @@ public class UserRegister extends HttpServlet {
 			response.sendRedirect(register_fail);
 			return;
 		}
-		
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

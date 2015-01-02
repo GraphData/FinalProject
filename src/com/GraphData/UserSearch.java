@@ -38,8 +38,7 @@ public class UserSearch extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String name = request.getParameter("name");
-		UserHelper userHelper = new UserHelper();
-		List<AccountModel> accounts = userHelper.searchUser(name);
+		List<AccountModel> accounts = UserHelper.searchUser(name);
 		System.out.println(name);
 		
 		System.out.println("search success:" + accounts.size());

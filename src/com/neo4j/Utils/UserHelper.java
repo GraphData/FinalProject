@@ -15,7 +15,7 @@ import com.neo4j.Helper.EmbeddedNeo4j;
 
 public class UserHelper {
 	
-	public void createNewUser(String name, String password)
+	public static void createNewUser(String name, String password)
 	{
 		Node people;
 		//Node secondNode;
@@ -39,7 +39,7 @@ public class UserHelper {
 		}
 	}
 	
-	public Boolean checkPassword(String name, String password)
+	public static Boolean checkPassword(String name, String password)
 	{
 		Node people;
 		Transaction tx = EmbeddedNeo4j.graphDb.beginTx();
@@ -63,7 +63,7 @@ public class UserHelper {
 		return false;
 	}
 
-	public void createUserProfile(AccountProfile account)
+	public static void createUserProfile(AccountProfile account)
 	{
 		Node people;
 		Transaction tx = EmbeddedNeo4j.graphDb.beginTx();
@@ -88,14 +88,30 @@ public class UserHelper {
 		
 	}
 	
-	public AccountProfile getProfile(String name)
+	public static AccountProfile getProfile(String name)
 	{
-		AccountProfile accountProfile = null;
+		Node people;
+		AccountProfile accountProfile = new AccountProfile();
+		Transaction tx = EmbeddedNeo4j.graphDb.beginTx();
+		try
+		{
+			Index<Node> peopleIndex = EmbeddedNeo4j.getIndex("people");
+			IndexHits<Node> hits = peopleIndex.get("name", name);
+			people = hits.getSingle();
+			accountProfile.setBirthday(people.getProperty("birthday").toString());
+			accountProfile.setCollege(people.getProperty("college").toString());
+			accountProfile.setMajor(people.getProperty("major").toString());
+			accountProfile.setHobby(people.getProperty("hobby").toString());
+		}
+		finally
+		{
+			tx.finish();
+		}
 		
 		return accountProfile;
 	}
 	
-	public List<AccountModel> searchUser(String name)
+	public static List<AccountModel> searchUser(String name)
 	{
 		Transaction tx = EmbeddedNeo4j.graphDb.beginTx();
 		List<AccountModel> accounts = new ArrayList<AccountModel>();

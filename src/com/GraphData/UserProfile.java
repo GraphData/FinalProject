@@ -32,6 +32,7 @@ public class UserProfile extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		/*
 		HttpSession session = request.getSession();
 		AccountProfile account = new AccountProfile();
 		AccountModel accountModel = (AccountModel) session.getAttribute("account");
@@ -49,8 +50,7 @@ public class UserProfile extends HttpServlet {
 		account.setUsername(accountModel.getUsername());
 		account.setPassword(accountModel.getPassword());
 		
-		UserHelper userHelper = new UserHelper();
-		userHelper.createUserProfile(account);
+		UserHelper.createUserProfile(account);
 		
 		if(true)
 		{	
@@ -65,7 +65,7 @@ public class UserProfile extends HttpServlet {
 			String register_fail = "fail.jsp";
 			response.sendRedirect(register_fail);
 			return;
-		}
+		}*/
 	}
 
 	/**
@@ -73,6 +73,39 @@ public class UserProfile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		AccountProfile account = new AccountProfile();
+		AccountModel accountModel = (AccountModel) session.getAttribute("account");
+		System.out.println("fillprofile");
+		System.out.println(accountModel.getPassword());
+		String birthday = request.getParameter("birthday");
+		String college = request.getParameter("college");
+		String major = request.getParameter("major");
+		String hobby = request.getParameter("hobby");
+		
+		account.setBirthday(birthday);
+		account.setCollege(college);
+		account.setMajor(major);
+		account.setHobby(hobby);
+		account.setUsername(accountModel.getUsername());
+		account.setPassword(accountModel.getPassword());
+		
+		UserHelper.createUserProfile(account);
+		
+		if(true)
+		{	
+			//System.out.println("success");
+			//session.setAttribute("account", account);
+			String register_suc = "home.jsp";
+			response.sendRedirect(register_suc);
+			return;
+		}
+		else
+		{
+			String register_fail = "fail.jsp";
+			response.sendRedirect(register_fail);
+			return;
+		}
 	}
 
 }

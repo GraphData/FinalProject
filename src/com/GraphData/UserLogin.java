@@ -36,8 +36,7 @@ public class UserLogin extends HttpServlet {
         String pwd = request.getParameter("pwd");
         account.setPassword(pwd);
         account.setUsername(username);
-        UserHelper userHelper = new UserHelper();
-        if(userHelper.checkPassword(username, pwd))
+        if(UserHelper.checkPassword(username, pwd))
         {
         	System.out.println("success login");
             session.setAttribute("account", account);
