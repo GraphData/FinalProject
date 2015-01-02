@@ -46,6 +46,8 @@ public class UserProfile extends HttpServlet {
 		account.setCollege(college);
 		account.setMajor(major);
 		account.setHobby(hobby);
+		account.setUsername(accountModel.getUsername());
+		account.setPassword(accountModel.getPassword());
 		
 		UserHelper userHelper = new UserHelper();
 		userHelper.createUserProfile(account);

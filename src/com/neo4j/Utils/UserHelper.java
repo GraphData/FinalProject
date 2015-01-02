@@ -65,6 +65,26 @@ public class UserHelper {
 
 	public void createUserProfile(AccountProfile account)
 	{
+		Node people;
+		Transaction tx = EmbeddedNeo4j.graphDb.beginTx();
+		try
+		{
+			Index<Node> peopleIndex = EmbeddedNeo4j.getIndex("people");
+			IndexHits<Node> hits = peopleIndex.get("name", account.getUsername());
+			people = hits.getSingle();
+			System.out.println("profile saved:" + people.getProperty("password").toString());
+			System.out.println("birthday" + account.getBirthday());
+			people.setProperty("birthday", account.getBirthday());
+			people.setProperty("college", account.getCollege());
+			people.setProperty("major", account.getMajor());
+			people.setProperty("hobby", account.getHobby());
+			System.out.println("profile saved:" + people.getProperty("password").toString());
+			tx.success();
+		}
+		finally
+		{
+			tx.finish();
+		}
 		
 	}
 	

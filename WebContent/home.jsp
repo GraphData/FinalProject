@@ -84,6 +84,8 @@ fieldset.search:hover {
     </fieldset>
 </form>
 </div>
+
+
 <table border="1">
 <%
 	try{
