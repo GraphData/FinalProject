@@ -86,6 +86,10 @@ fieldset.search:hover {
 </div>
 <p><a href="http://localhost:8080/GraphData/profile">个人资料</a></p>
 
+<form action="newsfeed_post" method="post">
+	    	新鲜事:<input type="text" name="content"><br>
+	    <input type="submit">
+	</form>
 <table border="1">
 <%
 	try{
