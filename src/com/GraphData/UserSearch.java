@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.GraphData.Model.AccountModel;
 import com.GraphData.Model.AccountProfile;
+import com.neo4j.Utils.NewsfeedHelper;
 import com.neo4j.Utils.UserHelper;
 
 /**
@@ -43,7 +44,8 @@ public class UserSearch extends HttpServlet {
 		
 		System.out.println("search success:" + accounts.size());
 		request.setAttribute("accounts", accounts);
-		request.setAttribute("doubi", "doubi2");
+		request.setAttribute("follows", UserHelper.getFollowList(((AccountModel)session.getAttribute("account")).getUsername()));   
+        request.setAttribute("news", NewsfeedHelper.getNewsfeedList(((AccountModel)session.getAttribute("account")).getUsername()));
 		String search_suc = "home.jsp";
 		request.getRequestDispatcher(search_suc).forward(request, response);
 	}

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.GraphData.Model.AccountModel;
 import com.neo4j.Utils.NewsfeedHelper;
+import com.neo4j.Utils.UserHelper;
 
 /**
  * Servlet implementation class NewsfeedCreate
@@ -42,11 +43,14 @@ public class NewsfeedCreate extends HttpServlet {
 		AccountModel account = (AccountModel) session.getAttribute("account");
 		String content = request.getParameter("content");
 		
+		request.setAttribute("follows", UserHelper.getFollowList(account.getUsername()));   
+        request.setAttribute("news", NewsfeedHelper.getNewsfeedList(account.getUsername()));
+        
 		NewsfeedHelper.PublishNewsfeed(account.getUsername(), content);
 		System.out.println("success create news");
         //session.setAttribute("account", account);
         String login_suc = "home.jsp";
-        response.sendRedirect(login_suc);
+        request.getRequestDispatcher(login_suc).forward(request, response);
         return;
 	}
 

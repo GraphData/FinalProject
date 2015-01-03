@@ -8,6 +8,8 @@ import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
+import org.neo4j.graphdb.traversal.TraversalDescription;
+import org.neo4j.graphdb.traversal.Uniqueness;
 
 import com.GraphData.Model.AccountProfile;
 import com.GraphData.Model.AccountModel;
@@ -155,7 +157,7 @@ public class UserHelper {
 			hits = peopleIndex.get("name", to);
 			t = hits.getSingle();
 			System.out.println("from:" + f.getProperty("name").toString() + " to:" + t.getProperty("name").toString());
-			f.createRelationshipTo(t, RelTypes.KNOWS);
+			f.createRelationshipTo(t, RelTypes.FOLLOWS);
 			tx.success();
 		}
 		finally
@@ -165,4 +167,44 @@ public class UserHelper {
 		
 		return;
 	}
+	
+	public static List<AccountProfile> getFollowList(String name)
+	{
+		Node f, t;
+		String output = "";
+		List<AccountProfile> followPeople = new ArrayList<AccountProfile>();
+		Transaction tx = EmbeddedNeo4j.graphDb.beginTx();
+		try
+		{
+			Index<Node> peopleIndex = EmbeddedNeo4j.getIndex("people");
+			IndexHits<Node> hits = peopleIndex.get("name", name);
+			f = hits.getSingle();
+			TraversalDescription followsTraversal = EmbeddedNeo4j.graphDb.traversalDescription()
+			        .depthFirst()
+			        .relationships(RelTypes.FOLLOWS)
+			        .uniqueness(Uniqueness.RELATIONSHIP_GLOBAL);
+			for (Node currentNode : followsTraversal
+			        .traverse(f)
+			        .nodes())
+			{
+				if(currentNode.getProperty("name").toString().equals(name))
+				{
+					continue;
+				}
+			    output += currentNode.getProperty("name") + "\n";
+			    AccountProfile people = new AccountProfile();
+			    people.setUsername(currentNode.getProperty("name").toString());
+			    followPeople.add(people);
+			}
+			System.out.println("following:\n" + output);
+		}
+		finally
+		{
+			tx.finish();
+		}
+		
+		return followPeople;
+	}
+	
+	
 }

@@ -2,6 +2,8 @@
     pageEncoding="utf-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.GraphData.Model.AccountModel" %>
+<%@ page import="com.GraphData.Model.AccountProfile" %>
+<%@ page import="com.GraphData.Model.Newsfeed" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -109,6 +111,54 @@ fieldset.search:hover {
 	    			<input type="submit" value="<%=accounts.get(i).getUsername()%>" name="name">
 				</form>
 			</td>
+			</tr>
+			<%
+		}	
+	}
+	catch(Exception e){
+
+	}
+%> 
+</table>
+<table border="1">
+<%
+	try{
+		List<Newsfeed> news = (List<Newsfeed>) request.getAttribute("news");
+		for(int i = 0 ; i < news.size(); i++)
+		{
+			%>
+			<tr>
+			<td>
+				<%=news.get(i).getContent()%>
+			</td>
+			<td>
+				<%=news.get(i).getPublisher() %>
+			</td>
+			<td>
+				<%=news.get(i).getTime() %>
+			</td>
+			</tr>
+			<%
+		}	
+	}
+	catch(Exception e){
+
+	}
+%> 
+</table>
+关注的人：
+<table border="1">
+<%
+	try{
+		List<AccountProfile> follows = (List<AccountProfile>) request.getAttribute("follows");
+		for(int i = 0 ; i < follows.size(); i++)
+		{
+			%>
+			<tr>
+			<td>
+				<%=follows.get(i).getUsername()%>
+			</td>
+
 			</tr>
 			<%
 		}	

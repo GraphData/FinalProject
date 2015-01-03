@@ -21,7 +21,8 @@ public class EmbeddedNeo4j {
 	public static enum RelTypes implements RelationshipType
 	{
 		KNOWS,
-		CONTAIN
+		PUBLISHES,
+		FOLLOWS
 	}
 	
 	public void createDb()

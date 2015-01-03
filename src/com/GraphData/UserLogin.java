@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.GraphData.Model.AccountModel;
+import com.neo4j.Utils.NewsfeedHelper;
 import com.neo4j.Utils.UserHelper;
 
 /**
@@ -40,8 +41,12 @@ public class UserLogin extends HttpServlet {
         {
         	System.out.println("success login");
             session.setAttribute("account", account);
+            
+            request.setAttribute("follows", UserHelper.getFollowList(username));   
+            request.setAttribute("news", NewsfeedHelper.getNewsfeedList(username));
+            
             String login_suc = "home.jsp";
-            response.sendRedirect(login_suc);
+            request.getRequestDispatcher(login_suc).forward(request, response);
             return;
         }
 
