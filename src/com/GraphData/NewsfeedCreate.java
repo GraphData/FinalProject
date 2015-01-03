@@ -43,11 +43,10 @@ public class NewsfeedCreate extends HttpServlet {
 		AccountModel account = (AccountModel) session.getAttribute("account");
 		String content = request.getParameter("content");
 		
-		request.setAttribute("follows", UserHelper.getFollowList(account.getUsername()));   
-        request.setAttribute("news", NewsfeedHelper.getNewsfeedList(account.getUsername()));
-        
 		NewsfeedHelper.PublishNewsfeed(account.getUsername(), content);
 		System.out.println("success create news");
+		request.setAttribute("follows", UserHelper.getFollowList(account.getUsername()));   
+        request.setAttribute("news", NewsfeedHelper.getNewsfeedList(account.getUsername()));
         //session.setAttribute("account", account);
         String login_suc = "home.jsp";
         request.getRequestDispatcher(login_suc).forward(request, response);
