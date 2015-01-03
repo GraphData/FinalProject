@@ -12,6 +12,7 @@ import org.neo4j.graphdb.index.IndexHits;
 import com.GraphData.Model.AccountProfile;
 import com.GraphData.Model.AccountModel;
 import com.neo4j.Helper.EmbeddedNeo4j;
+import com.neo4j.Helper.EmbeddedNeo4j.RelTypes;
 
 public class UserHelper {
 	
@@ -102,6 +103,7 @@ public class UserHelper {
 			accountProfile.setCollege(people.getProperty("college").toString());
 			accountProfile.setMajor(people.getProperty("major").toString());
 			accountProfile.setHobby(people.getProperty("hobby").toString());
+			tx.success();
 		}
 		finally
 		{
@@ -139,5 +141,28 @@ public class UserHelper {
 		tx.success();
 		System.out.println("search database finish");
 		return accounts;
+	}
+	
+	public static void followPeople(String from, String to)
+	{
+		Node f, t;
+		Transaction tx = EmbeddedNeo4j.graphDb.beginTx();
+		try
+		{
+			Index<Node> peopleIndex = EmbeddedNeo4j.getIndex("people");
+			IndexHits<Node> hits = peopleIndex.get("name", from);
+			f = hits.getSingle();
+			hits = peopleIndex.get("name", to);
+			t = hits.getSingle();
+			System.out.println("from:" + f.getProperty("name").toString() + " to:" + t.getProperty("name").toString());
+			f.createRelationshipTo(t, RelTypes.KNOWS);
+			tx.success();
+		}
+		finally
+		{
+			tx.finish();
+		}
+		
+		return;
 	}
 }

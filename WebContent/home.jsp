@@ -104,6 +104,11 @@ fieldset.search:hover {
 			<td>
 				<%=accounts.get(i).getPassword() %>
 			</td>
+			<td>
+				<form action="follow" method="post">
+	    			<input type="submit" value="<%=accounts.get(i).getUsername()%>" name="name">
+				</form>
+			</td>
 			</tr>
 			<%
 		}	
