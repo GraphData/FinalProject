@@ -39,7 +39,7 @@ public class UserHelper {
 		}
 		finally
 		{
-			tx.finish();
+			tx.close();
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class UserHelper {
 		}
 		finally
 		{
-			tx.finish();
+			tx.close();
 		}
 		
 		return false;
@@ -87,7 +87,7 @@ public class UserHelper {
 		}
 		finally
 		{
-			tx.finish();
+			tx.close();
 		}
 		
 	}
@@ -110,7 +110,7 @@ public class UserHelper {
 		}
 		finally
 		{
-			tx.finish();
+			tx.close();
 		}
 		
 		return accountProfile;
@@ -164,7 +164,7 @@ public class UserHelper {
 		}
 		finally
 		{
-			tx.finish();
+			tx.close();
 		}
 		
 		return;
@@ -213,7 +213,7 @@ public class UserHelper {
 		}
 		finally
 		{
-			tx.finish();
+			tx.close();
 		}
 		
 		return followPeople;
@@ -245,7 +245,7 @@ public class UserHelper {
 		}
 		finally
 		{
-			tx.finish();
+			tx.close();
 		}
 		
 		return;

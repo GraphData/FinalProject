@@ -1,7 +1,9 @@
 package com.neo4j.Utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +21,37 @@ import com.GraphData.Model.Newsfeed;
 
 import com.neo4j.Helper.EmbeddedNeo4j;
 import com.neo4j.Helper.EmbeddedNeo4j.RelTypes;
+
+class MyComparator implements Comparator<Newsfeed>{
+	public  int compare(Newsfeed  n1, Newsfeed n2 ){
+		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date d1 = null;
+		try {
+			d1 = df.parse(n1.getTime());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Date d2 = null;
+		try {
+			d2 = df.parse(n2.getTime());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long diff = d1.getTime() - d2.getTime();
+		 
+		if(diff > 0){
+			return 1;
+		}
+		else if(diff < 0){
+			return -1;
+		}
+		else{
+			return 0;
+		}
+	}
+}
 
 public class NewsfeedHelper {
 	public static void PublishNewsfeed(String name, String content)
@@ -46,7 +79,7 @@ public class NewsfeedHelper {
 		}
 		finally
 		{
-			tx.finish();
+			tx.close();
 		}
 		return;
 	}
@@ -102,9 +135,12 @@ public class NewsfeedHelper {
 		}
 		finally
 		{
-			tx.finish();
+			tx.close();
 		}
+		news.sort(new MyComparator());
 		
 		return news;
 	}
+	
+	
 }
