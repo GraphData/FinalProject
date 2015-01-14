@@ -3,6 +3,7 @@ package com.neo4j.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
@@ -158,6 +159,7 @@ public class UserHelper {
 			t = hits.getSingle();
 			System.out.println("from:" + f.getProperty("name").toString() + " to:" + t.getProperty("name").toString());
 			f.createRelationshipTo(t, RelTypes.FOLLOWS);
+			//f.getSingleRelationship(arg0, arg1)
 			tx.success();
 		}
 		finally
@@ -179,10 +181,21 @@ public class UserHelper {
 			Index<Node> peopleIndex = EmbeddedNeo4j.getIndex("people");
 			IndexHits<Node> hits = peopleIndex.get("name", name);
 			f = hits.getSingle();
+		
+			for(Relationship r : f.getRelationships(RelTypes.FOLLOWS, Direction.OUTGOING))
+			{
+				//System.out.println(name + " follows " + r.getEndNode().getProperty("name"));
+				output += r.getEndNode().getProperty("name") + "\n";
+				AccountProfile people = new AccountProfile();
+			    people.setUsername(r.getEndNode().getProperty("name").toString());
+			    followPeople.add(people);
+			}
+			/*
 			TraversalDescription followsTraversal = EmbeddedNeo4j.graphDb.traversalDescription()
 			        .depthFirst()
 			        .relationships(RelTypes.FOLLOWS)
 			        .uniqueness(Uniqueness.RELATIONSHIP_GLOBAL);
+			
 			for (Node currentNode : followsTraversal
 			        .traverse(f)
 			        .nodes())
@@ -195,7 +208,7 @@ public class UserHelper {
 			    AccountProfile people = new AccountProfile();
 			    people.setUsername(currentNode.getProperty("name").toString());
 			    followPeople.add(people);
-			}
+			}*/
 			System.out.println("following:\n" + output);
 		}
 		finally
@@ -204,6 +217,38 @@ public class UserHelper {
 		}
 		
 		return followPeople;
+	}
+	
+	public static void cancelFollowPeople(String from, String to)
+	{
+		Node f, t;
+		Transaction tx = EmbeddedNeo4j.graphDb.beginTx();
+		try
+		{
+			Index<Node> peopleIndex = EmbeddedNeo4j.getIndex("people");
+			IndexHits<Node> hits = peopleIndex.get("name", from);
+			f = hits.getSingle();
+			hits = peopleIndex.get("name", to);
+			t = hits.getSingle();
+			System.out.println("from:" + f.getProperty("name").toString() + " to:" + t.getProperty("name").toString());
+			for(Relationship r : f.getRelationships(RelTypes.FOLLOWS))
+			{
+				System.out.println(from + " follows " + r.getEndNode().getProperty("name"));
+				if(r.getEndNode().getProperty("name").equals(to))
+				{
+					System.out.println(from + "-" + to);
+					r.delete();
+				}
+			}
+				
+			tx.success();
+		}
+		finally
+		{
+			tx.finish();
+		}
+		
+		return;
 	}
 	
 	

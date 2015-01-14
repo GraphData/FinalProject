@@ -108,7 +108,7 @@ fieldset.search:hover {
 			</td>
 			<td>
 				<form action="follow" method="post">
-	    			<input type="submit" value="<%=accounts.get(i).getUsername()%>" name="name">
+	    			<button type="submit" value="<%=accounts.get(i).getUsername()%>" name="name">关注</button>
 				</form>
 			</td>
 			</tr>
@@ -157,6 +157,12 @@ fieldset.search:hover {
 			<tr>
 			<td>
 				<%=follows.get(i).getUsername()%>
+			</td>
+			<td>
+				<form action="cancel_follow" method="post">
+	    			
+	    			<button type="submit" value="<%=follows.get(i).getUsername()%>" name="name">取消关注</button>
+				</form>
 			</td>
 
 			</tr>

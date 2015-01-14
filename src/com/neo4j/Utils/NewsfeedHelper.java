@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
@@ -63,12 +64,12 @@ public class NewsfeedHelper {
 			user = hits.getSingle();
 			TraversalDescription followsTraversal = EmbeddedNeo4j.graphDb.traversalDescription()
 			        .depthFirst()
-			        .relationships(RelTypes.FOLLOWS)
+			        .relationships(RelTypes.FOLLOWS, Direction.OUTGOING)
 			        .uniqueness(Uniqueness.RELATIONSHIP_GLOBAL);
 			
 			TraversalDescription publishTraversal = EmbeddedNeo4j.graphDb.traversalDescription()
 			        .depthFirst()
-			        .relationships(RelTypes.PUBLISHES)
+			        .relationships(RelTypes.PUBLISHES, Direction.OUTGOING)
 			        .uniqueness(Uniqueness.RELATIONSHIP_GLOBAL);
 			
 			for (Node follow : followsTraversal

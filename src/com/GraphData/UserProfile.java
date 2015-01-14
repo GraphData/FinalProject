@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.GraphData.Model.AccountModel;
 import com.GraphData.Model.AccountProfile;
+import com.neo4j.Utils.NewsfeedHelper;
 import com.neo4j.Utils.UserHelper;
 
 /**
@@ -94,8 +95,8 @@ public class UserProfile extends HttpServlet {
 		
 		if(true)
 		{	
-			//System.out.println("success");
-			//session.setAttribute("account", account);
+			request.setAttribute("follows", UserHelper.getFollowList(accountModel.getUsername()));   
+            request.setAttribute("news", NewsfeedHelper.getNewsfeedList(accountModel.getUsername()));
 			String register_suc = "home.jsp";
 			response.sendRedirect(register_suc);
 			return;

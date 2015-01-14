@@ -31,6 +31,36 @@ public class UserLogin extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /*
+    	HttpSession session = request.getSession();
+        AccountModel account = new AccountModel();
+        String username = request.getParameter("username");
+        String pwd = request.getParameter("pwd");
+        account.setPassword(pwd);
+        account.setUsername(username);
+        if(UserHelper.checkPassword(username, pwd))
+        {
+        	System.out.println("success login");
+            session.setAttribute("account", account);
+            
+            request.setAttribute("follows", UserHelper.getFollowList(username));   
+            request.setAttribute("news", NewsfeedHelper.getNewsfeedList(username));
+            
+            String login_suc = "home.jsp";
+            request.getRequestDispatcher(login_suc).forward(request, response);
+            return;
+        }
+
+        String login_fail = "fail.jsp";
+        response.sendRedirect(login_fail);
+        return;*/
+    }
+
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //doGet(request, response);
         HttpSession session = request.getSession();
         AccountModel account = new AccountModel();
         String username = request.getParameter("username");
@@ -54,12 +84,4 @@ public class UserLogin extends HttpServlet {
         response.sendRedirect(login_fail);
         return;
     }
-
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-     */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
-
 }
