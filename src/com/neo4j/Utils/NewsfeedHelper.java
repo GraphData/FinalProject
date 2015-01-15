@@ -142,5 +142,50 @@ public class NewsfeedHelper {
 		return news;
 	}
 	
+	public static List<Newsfeed> getUserNewsfeedList(String name)
+	{
+		List<Newsfeed> news = new ArrayList<Newsfeed>();
+		Transaction tx = EmbeddedNeo4j.graphDb.beginTx();
+		String output = "";
+		Node user;
+		try
+		{
+			Index<Node> peopleIndex = EmbeddedNeo4j.getIndex("people");
+			IndexHits<Node> hits = peopleIndex.get("name", name);
+			user = hits.getSingle();
+			TraversalDescription publishTraversal = EmbeddedNeo4j.graphDb.traversalDescription()
+			        .depthFirst()
+			        .relationships(RelTypes.PUBLISHES, Direction.OUTGOING)
+			        .uniqueness(Uniqueness.RELATIONSHIP_GLOBAL);
+			
+			for(Node currentNew : publishTraversal
+			        .traverse(user)
+			        .nodes())
+			{
+				try
+				{
+					Newsfeed n = new Newsfeed();
+					n.setContent(currentNew.getProperty("content").toString());
+					n.setPublisher(currentNew.getProperty("publisher").toString());
+					n.setTime(currentNew.getProperty("time").toString());
+					news.add(n);
+					System.out.println("add success");
+					output += n.getContent();
+				}
+				catch(Exception e)
+				{
+					System.out.println("no content");
+				}
+			}
+		}
+		finally
+		{
+			tx.close();
+		}
+		news.sort(new MyComparator());
+		
+		return news;
+	}
+	
 	
 }

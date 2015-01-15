@@ -166,7 +166,7 @@ fieldset.search:hover {
 			%>
 			<tr>
 			<td width="60%">
-				<%=follows.get(i).getUsername()%>
+				<a href="http://localhost:8080/GraphData/home?name=<%=follows.get(i).getUsername()%>"><%=follows.get(i).getUsername()%></a>
 			</td>
 			<td>
 				<form action="cancel_follow" method="post">

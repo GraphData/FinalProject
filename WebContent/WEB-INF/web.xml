@@ -57,6 +57,12 @@
     <servlet-name>UserCancelFollow</servlet-name>
     <servlet-class>com.GraphData.UserCancelFollow</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>UserHome</servlet-name>
+    <servlet-class>com.GraphData.UserHome</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>UserLogin</servlet-name>
     <url-pattern>/login</url-pattern>
@@ -92,5 +98,9 @@
   <servlet-mapping>
     <servlet-name>UserCancelFollow</servlet-name>
     <url-pattern>/cancel_follow</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserHome</servlet-name>
+    <url-pattern>/home</url-pattern>
   </servlet-mapping>
 </web-app>
