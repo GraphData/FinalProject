@@ -7,18 +7,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-    AccountModel account = (AccountModel)session.getAttribute("account");
+	<%
+    	AccountModel account = (AccountModel)session.getAttribute("account");
     %>
-    username:<%= account.getUsername()%>
-     <br>
-     password:<%= account.getPassword() %>
-     <form action="fillProfile" method="post">
-     	生日:<input type="date" name="birthday"><br>
-    	大学:<input type="text" name="college"><br>
+	姓名:<%= account.getUsername()%>
+	<br>
+    <form action="fillProfile" method="post">
+		生日:<input type="date" name="birthday"><br>
+		大学:<input type="text" name="college"><br>
     	专业:<input type="text" name="major"><br>
     	爱好:<input type="text" name="hobby"><br>
-    <input type="submit">
+    	<input type="submit">
     </form>
 </body>
 </html>

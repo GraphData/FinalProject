@@ -9,18 +9,58 @@
 <body>
 <%
     AccountModel account = (AccountModel)session.getAttribute("account");
-    %>
-    username:<%= account.getUsername()%>
-     <br>
-     password:<%= account.getPassword() %>
+%>
 <%
     AccountProfile profile = (AccountProfile)request.getAttribute("profile");
-    %>
-    	生日:<%= profile.getBirthday()%>
-    	爱好:<%= profile.getHobby()%>
-    	学校:<%= profile.getCollege()%>
-    	专业:<%= profile.getMajor()%>
-     <br>
-     <p><a href="http://localhost:8080/GraphData/changeProfile">修改资料</a></p>
+%>
+	<table border="0" style="table-layout:fixed">
+		<tr>
+			<td width="30%">
+				姓名:
+			</td>
+			<td>
+				<%= account.getUsername()%>
+			</td>
+		</tr>
+		<tr>
+			<td width="30%">
+				生日:
+			</td>
+			<td>
+				<%=profile.getBirthday()%>
+			</td>
+		</tr>
+		<tr>
+			<td width="30%">
+				爱好:
+			</td>
+			<td>
+				<%=profile.getHobby()%>
+			</td>
+		</tr>
+		<tr>
+			<td width="30%">
+				学校:
+			</td>
+			<td>
+				<%=profile.getCollege()%>
+			</td>
+		</tr>
+		<tr>
+			<td width="30%">
+				专业:
+			</td>
+			<td>
+				<%=profile.getMajor()%>
+			</td>
+		</tr>
+		<tr>
+			<td width="30%">
+				<p><a href="http://localhost:8080/GraphData/changeProfile">修改资料</a></p>
+			</td>
+		</tr>
+	</table>
+
+     
 </body>
 </html>

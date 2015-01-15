@@ -7,11 +7,10 @@
 <title>登陆</title>
 </head>
 <body>
-Hello World
-<form action="login" method="post">
-    username:<input type="text" name="username"><br>
-    password:<input type="password" name="pwd"><br>
-    <input type="submit" value="登陆">
+	<form action="login" method="post">
+    	姓名:<input type="text" name="username"><br>
+    	密码:<input type="password" name="pwd"><br>
+    	<input type="submit" value="登陆">
     </form>
     <input type="button" onclick="window.location.href='register.jsp'" value="注册">
 </body>
